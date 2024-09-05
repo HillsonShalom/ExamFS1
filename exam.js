@@ -218,16 +218,24 @@ let militaryUnit = {
 
 
 
-function Mission1(){
-
+function Mission1(unitData){
+    return `
+Details of the chief of staff:
+Rank: ${unitData.commandStructure.chiefOfStaff.rank}
+Name: ${unitData.commandStructure.chiefOfStaff.name}
+Phone: ${unitData.commandStructure.chiefOfStaff.contact.phone}  
+    `;
 }
 
-function Mission2(){
-
+function Mission2(unitData){
+    return `
+The number of soldiers in the unit:
+${unitData.personnel.length}
+    `
 }
 
 function Mission3(){
-
+    
 }
 
 function Mission4(){
@@ -247,4 +255,5 @@ module.exports = {
     Mission4,
     Mission5
 }
-console.log(militaryUnit);
+
+console.log(Mission1(militaryUnit))
