@@ -82,27 +82,16 @@ let militaryUnit = {
       ],
   
       firearms: [
-  
         {
-  
           type: "M16 Rifle",
-  
           quantity: 500,
-  
           status: "Operational",
-  
         },
-  
         {
-  
           type: "M249 SAW",
-  
           quantity: 100,
-  
           status: "Operational",
-  
         },
-  
       ],
   
       otherEquipment: [
@@ -162,51 +151,29 @@ let militaryUnit = {
     ],
   
     trainingPrograms: [
-  
       {
-  
         programName: "Basic Combat Training",
-  
         duration: 10,
-  
         focus:
-  
           "Fundamentals of soldiering, physical conditioning, and basic combat skills.",
-  
       },
-  
       {
-  
         programName: "Advanced Individual Training",
-  
         duration: 12,
-  
         focus:
-  
           "Specialized training for specific military occupational specialties.",
-  
       },
-  
     ],
   
     history: [
-  
       {
-  
         eventDate: "1941-06-01",
-  
         eventDescription: "Establishment of the 1st Infantry Division.",
-  
       },
-  
       {
-  
         eventDate: "1944-06-06",
-  
         eventDescription: "Participated in the D-Day landings in Normandy.",
-  
       },
-  
     ],
     currentDeployment: {
       location: "Middle East",
@@ -234,16 +201,32 @@ ${unitData.personnel.length}
     `
 }
 
-function Mission3(){
-    
+function Mission3(newDeployment, unitData){
+    let curr = unitData.currentDeployment;
+    unitData.currentDeployment = newDeployment;
+    unitData.history.push({eventDate: curr.startDate, eventDescription: curr.mission});
+    return unitData;
 }
 
-function Mission4(){
-
+function Mission4(firearm, unitData){
+    let firearms = unitData.equipment.firearms;
+    for (let i = 0; i < firearms.length; i++){
+        if (firearms[i].type === firearm.type){
+            firearms[i].quantity += 1;
+            break;
+        }
+        if (i === firearms.length - 1){
+            firearms.push(firearm);
+        }
+    }
+    return unitData;
 }
 
-function Mission5(){
-
+function Mission5(unitData){
+    let sum = unitData.trainingPrograms.reduce((a, b) => a + b.duration, 0);
+    return `
+    The total duration of training programs: ${sum}
+    `;
 }
 
 
@@ -256,4 +239,4 @@ module.exports = {
     Mission5
 }
 
-console.log(Mission1(militaryUnit))
+console.log(Mission5(militaryUnit))
